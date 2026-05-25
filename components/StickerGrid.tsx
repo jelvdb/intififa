@@ -45,8 +45,8 @@ export default function StickerGrid({ stickers, collected, onStickerClick }: Sti
             {style.emoji && !isCollected && (
               <span className="text-xs leading-none">{style.emoji}</span>
             )}
-            <span className="text-xs font-bold leading-none" style={{ color: isCollected ? "#4ade80" : "#f1f5f9" }}>
-              {sticker.number}
+            <span className="font-bold leading-none" style={{ color: isCollected ? "#4ade80" : "#f1f5f9", fontSize: sticker.code.length > 5 ? "9px" : "10px" }}>
+              {sticker.code}
             </span>
           </button>
         );

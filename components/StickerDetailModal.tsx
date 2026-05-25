@@ -65,10 +65,10 @@ export default function StickerDetailModal({ sticker, section, collected, onTogg
             style={{ background: "#0f1120", border: `2px solid ${color}` }}
           >
             <span
-              className="text-5xl font-black tracking-tight"
+              className="text-4xl font-black tracking-tight font-mono"
               style={{ color }}
             >
-              #{sticker.number}
+              {sticker.code}
             </span>
             <span className="text-xl font-bold leading-tight" style={{ color: "#f1f5f9" }}>
               {sticker.label}

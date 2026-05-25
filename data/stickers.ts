@@ -3,6 +3,7 @@ export type StickerType = "foil" | "player" | "team-photo" | "special" | "insert
 export interface Sticker {
   id: string;
   number: number;
+  code: string;
   label: string;
   type: StickerType;
 }
@@ -117,39 +118,41 @@ const countries: { name: string; flag: string; id: string }[] = [
 ];
 
 function buildCountryStickers(countryId: string, startNumber: number, players: string[]): Sticker[] {
+  const prefix = countryId.toUpperCase();
   return [
-    { id: `${countryId}-1`, number: startNumber, label: "Logo (Foil)", type: "foil" },
+    { id: `${countryId}-1`, number: startNumber, code: `${prefix}1`, label: "Logo (Foil)", type: "foil" },
     ...players.map((name, i) => ({
       id: `${countryId}-${i + 2}`,
       number: startNumber + i + 1,
+      code: `${prefix}${i + 2}`,
       label: name,
       type: "player" as StickerType,
     })),
-    { id: `${countryId}-20`, number: startNumber + 19, label: "Teamfoto", type: "team-photo" },
+    { id: `${countryId}-20`, number: startNumber + 19, code: `${prefix}20`, label: "Teamfoto", type: "team-photo" },
   ];
 }
 
 const specialStickers: Sticker[] = [
-  { id: "sp-1",  number: 1,  label: "Panini Logo",                    type: "special" },
-  { id: "sp-2",  number: 2,  label: "Officieel Embleem",              type: "special" },
-  { id: "sp-3",  number: 3,  label: "Mascotte",                       type: "special" },
-  { id: "sp-4",  number: 4,  label: "Slogan",                         type: "special" },
-  { id: "sp-5",  number: 5,  label: "Bal",                            type: "special" },
-  { id: "sp-6",  number: 6,  label: "Gastland: Canada",               type: "special" },
-  { id: "sp-7",  number: 7,  label: "Gastland: Mexico",               type: "special" },
-  { id: "sp-8",  number: 8,  label: "Gastland: USA",                  type: "special" },
-  { id: "sp-9",  number: 9,  label: "WK Historie: Italië 1934",       type: "special" },
-  { id: "sp-10", number: 10, label: "WK Historie: Uruguay 1950",      type: "special" },
-  { id: "sp-11", number: 11, label: "WK Historie: W-Duitsland 1954",  type: "special" },
-  { id: "sp-12", number: 12, label: "WK Historie: Brazilië 1962",     type: "special" },
-  { id: "sp-13", number: 13, label: "WK Historie: W-Duitsland 1974",  type: "special" },
-  { id: "sp-14", number: 14, label: "WK Historie: Argentinië 1986",   type: "special" },
-  { id: "sp-15", number: 15, label: "WK Historie: Brazilië 1994",     type: "special" },
-  { id: "sp-16", number: 16, label: "WK Historie: Brazilië 2002",     type: "special" },
-  { id: "sp-17", number: 17, label: "WK Historie: Italië 2006",       type: "special" },
-  { id: "sp-18", number: 18, label: "WK Historie: Duitsland 2014",    type: "special" },
-  { id: "sp-19", number: 19, label: "WK Historie: Argentinië 2022",   type: "special" },
-  { id: "sp-20", number: 20, label: "WK Historie: Extra",             type: "special" },
+  { id: "sp-1",  number: 1,  code: "WC1",  label: "Panini Logo",                    type: "special" },
+  { id: "sp-2",  number: 2,  code: "WC2",  label: "Officieel Embleem",              type: "special" },
+  { id: "sp-3",  number: 3,  code: "WC3",  label: "Mascotte",                       type: "special" },
+  { id: "sp-4",  number: 4,  code: "WC4",  label: "Slogan",                         type: "special" },
+  { id: "sp-5",  number: 5,  code: "WC5",  label: "Bal",                            type: "special" },
+  { id: "sp-6",  number: 6,  code: "WC6",  label: "Gastland: Canada",               type: "special" },
+  { id: "sp-7",  number: 7,  code: "WC7",  label: "Gastland: Mexico",               type: "special" },
+  { id: "sp-8",  number: 8,  code: "WC8",  label: "Gastland: USA",                  type: "special" },
+  { id: "sp-9",  number: 9,  code: "WC9",  label: "WK Historie: Italië 1934",       type: "special" },
+  { id: "sp-10", number: 10, code: "WC10", label: "WK Historie: Uruguay 1950",      type: "special" },
+  { id: "sp-11", number: 11, code: "WC11", label: "WK Historie: W-Duitsland 1954",  type: "special" },
+  { id: "sp-12", number: 12, code: "WC12", label: "WK Historie: Brazilië 1962",     type: "special" },
+  { id: "sp-13", number: 13, code: "WC13", label: "WK Historie: W-Duitsland 1974",  type: "special" },
+  { id: "sp-14", number: 14, code: "WC14", label: "WK Historie: Argentinië 1986",   type: "special" },
+  { id: "sp-15", number: 15, code: "WC15", label: "WK Historie: Brazilië 1994",     type: "special" },
+  { id: "sp-16", number: 16, code: "WC16", label: "WK Historie: Brazilië 2002",     type: "special" },
+  { id: "sp-17", number: 17, code: "WC17", label: "WK Historie: Italië 2006",       type: "special" },
+  { id: "sp-18", number: 18, code: "WC18", label: "WK Historie: Duitsland 2014",    type: "special" },
+  { id: "sp-19", number: 19, code: "WC19", label: "WK Historie: Argentinië 2022",   type: "special" },
+  { id: "sp-20", number: 20, code: "WC20", label: "WK Historie: Extra",             type: "special" },
 ];
 
 const countryStart = 21;
