@@ -4,14 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { sections, totalStickers, Sticker, Section } from "@/data/stickers";
 import StatsBar from "@/components/StatsBar";
 import CountrySection from "@/components/CountrySection";
-import PhotoUpload from "@/components/PhotoUpload";
 import StickerDetailModal from "@/components/StickerDetailModal";
-
-interface Photo {
-  filename: string;
-  date: string;
-  note: string;
-}
 
 interface SelectedSticker {
   sticker: Sticker;
@@ -20,17 +13,13 @@ interface SelectedSticker {
 
 export default function Home() {
   const [collected, setCollected] = useState<Record<string, boolean>>({});
-  const [photos, setPhotos] = useState<Photo[]>([]);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<SelectedSticker | null>(null);
 
   useEffect(() => {
     fetch("/api/state")
       .then((r) => r.json())
-      .then((s) => {
-        setCollected(s.collected ?? {});
-        setPhotos(s.photos ?? []);
-      });
+      .then((s) => setCollected(s.collected ?? {}));
   }, []);
 
   const handleToggle = useCallback(async (stickerId: string) => {
@@ -92,18 +81,6 @@ export default function Home() {
           </p>
         )}
       </div>
-
-      <PhotoUpload
-        photos={photos}
-        onUploaded={(newPhotos, newIds) => {
-          setPhotos(newPhotos);
-          setCollected((prev) => {
-            const copy = { ...prev };
-            for (const id of newIds) copy[id] = true;
-            return copy;
-          });
-        }}
-      />
 
       {selected && (
         <StickerDetailModal

@@ -10,6 +10,7 @@ export default function BottomNav() {
     { href: "/",           label: "Collectie", icon: "📚" },
     { href: "/duplicates", label: "Dubbels",   icon: "🔁" },
     { href: "/extras",     label: "Extra",     icon: "⭐" },
+    { href: "/upload",     label: "Foto",      icon: "📷" },
   ];
 
   return (
