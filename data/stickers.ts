@@ -164,17 +164,9 @@ const countrySections: Section[] = countries.map((country, index) => ({
   ),
 }));
 
-const insertStickers: Sticker[] = Array.from({ length: 12 }, (_, i) => ({
-  id: `cc-${i + 1}`,
-  number: countryStart + 48 * 20 + i,
-  label: `Coca-Cola USA ${i + 1}`,
-  type: "insert" as StickerType,
-}));
-
 export const sections: Section[] = [
   { id: "special", name: "Speciaal", flag: "🏆", stickers: specialStickers },
   ...countrySections,
-  { id: "coca-cola", name: "Coca-Cola USA Set", flag: "🥤", stickers: insertStickers },
 ];
 
 export const totalStickers = sections.reduce((sum, s) => sum + s.stickers.length, 0);
