@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
+import sharp from "sharp";
 import { readState } from "@/lib/storage";
 import { sections } from "@/data/stickers";
 
@@ -10,32 +11,38 @@ for (const section of sections) {
   }
 }
 
+async function toJpegBase64(buffer: Buffer): Promise<string> {
+  const jpeg = await sharp(buffer).rotate().jpeg({ quality: 90 }).toBuffer();
+  return jpeg.toString("base64");
+}
+
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
   const file = formData.get("photo") as File;
   if (!file) return NextResponse.json({ error: "No photo" }, { status: 400 });
 
-  const bytes = await file.arrayBuffer();
-  const base64 = Buffer.from(bytes).toString("base64");
+  const bytes = Buffer.from(await file.arrayBuffer());
 
-  const rawType = file.type;
-  const mediaType: "image/jpeg" | "image/png" | "image/webp" | "image/gif" =
-    rawType === "image/png" ? "image/png"
-    : rawType === "image/webp" ? "image/webp"
-    : "image/jpeg";
+  let base64: string;
+  try {
+    base64 = await toJpegBase64(bytes);
+  } catch {
+    // Fallback: send raw bytes as-is (shouldn't happen for valid images)
+    base64 = bytes.toString("base64");
+  }
 
   const client = new Anthropic();
 
   const msg = await client.messages.create({
-    model: "claude-opus-4-5",
-    max_tokens: 768,
+    model: "claude-haiku-4-5",
+    max_tokens: 512,
     messages: [
       {
         role: "user",
         content: [
           {
             type: "image",
-            source: { type: "base64", media_type: mediaType, data: base64 },
+            source: { type: "base64", media_type: "image/jpeg", data: base64 },
           },
           {
             type: "text",

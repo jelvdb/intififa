@@ -135,33 +135,42 @@ export default function UploadPage() {
             {preview ? (
               /* Preview + analyze */
               <div className="flex flex-col gap-3">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={preview}
-                  alt="preview"
-                  className="w-full rounded-2xl object-contain max-h-64"
-                  style={{ background: "#1a1a2e" }}
-                />
-                <div className="flex gap-3">
-                  <button
-                    className="flex-1 rounded-2xl py-3 font-bold text-sm"
-                    style={{ background: "#1e2a3a", color: "#94a3b8" }}
-                    onClick={reset}
-                    disabled={step === "analyzing"}
-                  >
-                    Andere foto
-                  </button>
-                  <button
-                    className="flex-1 rounded-2xl py-3 font-bold text-sm disabled:opacity-50 flex items-center justify-center gap-2"
-                    style={{ background: "linear-gradient(135deg, #e8c84a, #f97316)", color: "#0f0f1a" }}
-                    onClick={() => file && handleAnalyze(file)}
-                    disabled={step === "analyzing"}
-                  >
-                    {step === "analyzing" ? (
-                      <><span className="animate-spin inline-block">⟳</span> Herkennen...</>
-                    ) : "Analyseren"}
-                  </button>
+                <div
+                  className="w-full rounded-2xl overflow-hidden relative flex items-center justify-center"
+                  style={{ background: "#1a1a2e", minHeight: 220 }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={preview}
+                    alt=""
+                    className="w-full object-contain"
+                    style={{ maxHeight: 320, opacity: step === "analyzing" ? 0.4 : 1 }}
+                  />
+                  {step === "analyzing" && (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+                      <span className="text-3xl animate-spin inline-block">⟳</span>
+                      <span className="text-sm font-bold" style={{ color: "#e8c84a" }}>Stickers herkennen...</span>
+                    </div>
+                  )}
                 </div>
+                {step !== "analyzing" && (
+                  <div className="flex gap-3">
+                    <button
+                      className="flex-1 rounded-2xl py-3 font-bold text-sm"
+                      style={{ background: "#1e2a3a", color: "#94a3b8" }}
+                      onClick={reset}
+                    >
+                      Andere foto
+                    </button>
+                    <button
+                      className="flex-1 rounded-2xl py-3 font-bold text-sm flex items-center justify-center gap-2"
+                      style={{ background: "linear-gradient(135deg, #e8c84a, #f97316)", color: "#0f0f1a" }}
+                      onClick={() => file && handleAnalyze(file)}
+                    >
+                      Analyseren
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
               /* Pick source */
@@ -220,13 +229,13 @@ export default function UploadPage() {
         {(step === "review" || step === "applying") && result && (
           <div className="flex flex-col gap-3">
             {preview && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={preview}
-                alt="preview"
-                className="w-full rounded-2xl object-contain max-h-48"
-                style={{ background: "#1a1a2e" }}
-              />
+              <div
+                className="w-full rounded-2xl overflow-hidden flex items-center justify-center"
+                style={{ background: "#1a1a2e", maxHeight: 200 }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={preview} alt="" className="w-full object-contain" style={{ maxHeight: 200 }} />
+              </div>
             )}
 
             {result.newStickers.length > 0 && (
