@@ -6,14 +6,16 @@ const UPLOADS_DIR = path.join(process.cwd(), "public", "uploads");
 
 export interface AppState {
   collected: Record<string, boolean>;
+  duplicates: Record<string, number>;
   photos: { filename: string; date: string; note: string }[];
 }
 
 export function readState(): AppState {
   if (!fs.existsSync(STATE_FILE)) {
-    return { collected: {}, photos: [] };
+    return { collected: {}, duplicates: {}, photos: [] };
   }
-  return JSON.parse(fs.readFileSync(STATE_FILE, "utf-8"));
+  const s = JSON.parse(fs.readFileSync(STATE_FILE, "utf-8"));
+  return { collected: {}, duplicates: {}, photos: [], ...s };
 }
 
 export function writeState(state: AppState): void {
