@@ -11,11 +11,15 @@ interface CountrySectionProps {
 }
 
 export default function CountrySection({ section, collected, onStickerClick }: CountrySectionProps) {
-  const [open, setOpen] = useState(false);
-  const sectionCollected = section.stickers.filter((s) => collected[s.id]).length;
+  const [open, setOpen] = useState(true);
+  const collectedStickers = section.stickers.filter((s) => collected[s.id]);
+  const sectionCollected = collectedStickers.length;
   const total = section.stickers.length;
-  const pct = Math.round((sectionCollected / total) * 100);
   const done = sectionCollected === total;
+  const collectedNumbers = collectedStickers
+    .map((s) => parseInt(s.id.split("-")[1], 10))
+    .sort((a, b) => a - b)
+    .join(" · ");
 
   return (
     <div
@@ -26,7 +30,7 @@ export default function CountrySection({ section, collected, onStickerClick }: C
         className="w-full flex items-center gap-3 px-4 py-3"
         onClick={() => setOpen((o) => !o)}
       >
-        <span className="text-2xl leading-none">{section.flag}</span>
+        <span className="leading-none" style={{ fontSize: "3rem" }}>{section.flag}</span>
         <div className="flex-1 text-left">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-sm">{section.name}</span>
@@ -36,15 +40,11 @@ export default function CountrySection({ section, collected, onStickerClick }: C
               </span>
             )}
           </div>
-          <div className="mt-1 h-1 rounded-full overflow-hidden" style={{ background: "#0f1a2e" }}>
-            <div
-              className="h-full rounded-full"
-              style={{
-                width: `${pct}%`,
-                background: done ? "#16a34a" : "linear-gradient(90deg, #e8c84a, #f97316)",
-              }}
-            />
-          </div>
+          {collectedNumbers && (
+            <p className="leading-none mt-0.5 truncate" style={{ fontSize: 10, color: "#475569" }}>
+              {collectedNumbers}
+            </p>
+          )}
         </div>
         <div className="text-right min-w-[40px]">
           <span className="text-sm font-bold" style={{ color: done ? "#4ade80" : "#e8c84a" }}>

@@ -3,6 +3,8 @@ import Anthropic from "@anthropic-ai/sdk";
 import { readState } from "@/lib/storage";
 import { sections } from "@/data/stickers";
 
+export const maxDuration = 60; // seconds — needed for Claude image analysis
+
 const codeToId = new Map<string, string>();
 for (const section of sections) {
   for (const sticker of section.stickers) {

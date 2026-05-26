@@ -119,17 +119,38 @@ const countries: { name: string; flag: string; id: string }[] = [
 
 function buildCountryStickers(countryId: string, startNumber: number, players: string[]): Sticker[] {
   const prefix = countryId.toUpperCase();
-  return [
+  const stickers: Sticker[] = [
     { id: `${countryId}-1`, number: startNumber, code: `${prefix}1`, label: "Logo (Foil)", type: "foil" },
-    ...players.map((name, i) => ({
+  ];
+  // Positions 2–12: players 1–11
+  for (let i = 0; i < 11; i++) {
+    stickers.push({
       id: `${countryId}-${i + 2}`,
       number: startNumber + i + 1,
       code: `${prefix}${i + 2}`,
-      label: name,
-      type: "player" as StickerType,
-    })),
-    { id: `${countryId}-20`, number: startNumber + 19, code: `${prefix}20`, label: "Teamfoto", type: "team-photo" },
-  ];
+      label: players[i] ?? "",
+      type: "player",
+    });
+  }
+  // Position 13: We Are [Country] label sticker
+  stickers.push({
+    id: `${countryId}-13`,
+    number: startNumber + 12,
+    code: `${prefix}13`,
+    label: "We Are",
+    type: "team-photo",
+  });
+  // Positions 14–20: players 12–18
+  for (let i = 11; i < 18; i++) {
+    stickers.push({
+      id: `${countryId}-${i + 3}`,
+      number: startNumber + i + 2,
+      code: `${prefix}${i + 3}`,
+      label: players[i] ?? "",
+      type: "player",
+    });
+  }
+  return stickers;
 }
 
 const specialStickers: Sticker[] = [

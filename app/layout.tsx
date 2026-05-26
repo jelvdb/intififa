@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import BottomNav from "@/components/BottomNav";
+import PinModal from "@/components/PinModal";
 
 export const metadata: Metadata = {
-  title: "Intififa 🏆 WK 2026 Stickerboek",
+  title: "Paninti 🏆 WK 2026 Stickerboek",
   description: "Panini FIFA World Cup 2026 sticker tracker",
   manifest: "/manifest.json",
 };
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
         <BottomNav />
+        <PinModal />
       </body>
     </html>
   );

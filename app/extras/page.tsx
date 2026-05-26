@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { requireAuth } from "@/lib/auth";
 
 interface ExtraSticker {
   id: string;
@@ -18,6 +19,7 @@ export default function ExtrasPage() {
   }, []);
 
   const handleDelta = useCallback(async (id: string, delta: number) => {
+    if (!await requireAuth()) return;
     setExtras((prev) =>
       prev
         .map((e) => e.id === id ? { ...e, count: Math.max(0, e.count + delta) } : e)
@@ -31,6 +33,7 @@ export default function ExtrasPage() {
   }, []);
 
   const handleDelete = useCallback(async (id: string) => {
+    if (!await requireAuth()) return;
     setExtras((prev) => prev.filter((e) => e.id !== id));
     await fetch("/api/extras", {
       method: "POST",

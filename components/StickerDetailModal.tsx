@@ -1,6 +1,7 @@
 "use client";
 
 import { Sticker, Section } from "@/data/stickers";
+import { requireAuth } from "@/lib/auth";
 
 interface Props {
   sticker: Sticker;
@@ -8,6 +9,10 @@ interface Props {
   collected: boolean;
   onToggle: () => void;
   onClose: () => void;
+}
+
+async function authThenToggle(onToggle: () => void) {
+  if (await requireAuth()) onToggle();
 }
 
 const TYPE_LABEL: Record<string, string> = {
@@ -92,7 +97,7 @@ export default function StickerDetailModal({ sticker, section, collected, onTogg
             <button
               className="w-full rounded-2xl py-4 font-bold text-base flex items-center justify-center gap-2"
               style={{ background: "#14532d", border: "2px solid #16a34a", color: "#4ade80" }}
-              onClick={onToggle}
+              onClick={() => authThenToggle(onToggle)}
             >
               ✓ Verzameld — tik om te verwijderen
             </button>
@@ -100,7 +105,7 @@ export default function StickerDetailModal({ sticker, section, collected, onTogg
             <button
               className="w-full rounded-2xl py-4 font-bold text-base"
               style={{ background: "linear-gradient(135deg, #e8c84a, #f97316)", color: "#0f0f1a" }}
-              onClick={onToggle}
+              onClick={() => authThenToggle(onToggle)}
             >
               Afvinken als verzameld
             </button>
