@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { sections, Sticker, Section } from "@/data/stickers";
+import { requireAuth } from "@/lib/auth";
 
 interface DuplicateEntry {
   sticker: Sticker;
@@ -27,6 +28,7 @@ export default function DuplicatesPage() {
   }, []);
 
   const handleDelta = useCallback(async (stickerId: string, delta: number) => {
+    if (!await requireAuth()) return;
     setDuplicates((prev) => {
       const next = { ...prev };
       const val = Math.max(0, (next[stickerId] ?? 0) + delta);
@@ -56,7 +58,7 @@ export default function DuplicatesPage() {
     <div className="min-h-dvh pb-24">
       {/* Header */}
       <div
-        className="sticky top-0 z-30 px-4 py-4"
+        className="sticky top-11 z-30 px-4 py-4"
         style={{ background: "#0f0f1a", borderBottom: "1px solid #1e2a3a" }}
       >
         <div className="max-w-lg mx-auto flex items-center justify-between">
@@ -179,7 +181,7 @@ function AddDuplicateButton({ onAdd }: { onAdd: (id: string, delta: number) => v
       <button
         className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold shadow-lg"
         style={{ background: "linear-gradient(135deg, #e8c84a, #f97316)", color: "#0f0f1a" }}
-        onClick={() => setOpen(true)}
+        onClick={async () => { if (await requireAuth()) setOpen(true); }}
       >
         +
       </button>
