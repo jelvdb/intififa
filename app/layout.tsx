@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import AppHeader from "@/components/AppHeader";
 import BottomNav from "@/components/BottomNav";
 import PinModal from "@/components/PinModal";
 
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="nl">
       <body>
+        <AppHeader />
         {children}
         <BottomNav />
         <PinModal />

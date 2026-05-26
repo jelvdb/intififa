@@ -190,7 +190,7 @@ export default function UploadPage() {
   return (
     <div className="min-h-dvh pb-24">
       {/* Header */}
-      <div className="sticky top-0 z-30 px-4 py-4" style={{ background: "#0f0f1a", borderBottom: "1px solid #1e2a3a" }}>
+      <div className="sticky top-11 z-30 px-4 py-4" style={{ background: "#0f0f1a", borderBottom: "1px solid #1e2a3a" }}>
         <div className="max-w-lg mx-auto">
           <h1 className="text-lg font-bold">📷 Foto opladen</h1>
           <p className="text-xs" style={{ color: "#64748b" }}>Herkent nieuwe, dubbele en extra stickers</p>

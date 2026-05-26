@@ -58,7 +58,7 @@ export default function DuplicatesPage() {
     <div className="min-h-dvh pb-24">
       {/* Header */}
       <div
-        className="sticky top-0 z-30 px-4 py-4"
+        className="sticky top-11 z-30 px-4 py-4"
         style={{ background: "#0f0f1a", borderBottom: "1px solid #1e2a3a" }}
       >
         <div className="max-w-lg mx-auto flex items-center justify-between">
