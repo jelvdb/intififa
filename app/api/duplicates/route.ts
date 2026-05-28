@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Missing stickerId or delta" }, { status: 400 });
   }
 
-  const state = readState();
+  const state = await readState();
   const current = state.duplicates[stickerId] ?? 0;
   const next = Math.max(0, current + delta);
 
@@ -17,6 +17,6 @@ export async function POST(request: NextRequest) {
     state.duplicates[stickerId] = next;
   }
 
-  writeState(state);
+  await writeState(state);
   return NextResponse.json({ ok: true, duplicates: state.duplicates });
 }

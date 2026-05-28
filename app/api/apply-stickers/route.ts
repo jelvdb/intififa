@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
   }
 
-  const state = readState();
+  const state = await readState();
 
   for (const id of newStickers) {
     state.collected[id] = true;
@@ -18,6 +18,6 @@ export async function POST(request: NextRequest) {
     state.duplicates[id] = (state.duplicates[id] ?? 0) + 1;
   }
 
-  writeState(state);
+  await writeState(state);
   return NextResponse.json({ ok: true, collected: state.collected, duplicates: state.duplicates });
 }

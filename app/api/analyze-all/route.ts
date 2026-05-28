@@ -77,7 +77,7 @@ Only include items you can read with confidence.`,
     extraLabels = [];
   }
 
-  const state = readState();
+  const state = await readState();
   const newStickers: string[] = [];
   const duplicateStickers: string[] = [];
   const unknownCodes: string[] = [];
