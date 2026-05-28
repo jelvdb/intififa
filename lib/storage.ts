@@ -23,13 +23,14 @@ const emptyState = (): AppState => ({ collected: {}, duplicates: {}, photos: [],
 
 // Upstash when configured (production / shared online collection),
 // local JSON file as fallback for development without credentials.
-const useRedis = Boolean(
-  process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN,
-);
+// Vercel's Upstash integration injects KV_REST_API_* names; accept both.
+const redisUrl = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
+const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
+const useRedis = Boolean(redisUrl && redisToken);
 
 let redis: Redis | null = null;
 function getRedis(): Redis {
-  if (!redis) redis = Redis.fromEnv();
+  if (!redis) redis = new Redis({ url: redisUrl!, token: redisToken! });
   return redis;
 }
 
