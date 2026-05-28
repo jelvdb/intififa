@@ -2,15 +2,29 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function BottomNav() {
   const path = usePathname();
+  const [collectedCount, setCollectedCount] = useState<number | null>(null);
+  const [duplicatesCount, setDuplicatesCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch("/api/state")
+      .then((r) => r.json())
+      .then((s) => {
+        setCollectedCount(Object.keys(s.collected ?? {}).length);
+        setDuplicatesCount(
+          Object.values(s.duplicates ?? {}).reduce((sum: number, n) => sum + (n as number), 0)
+        );
+      });
+  }, []);
 
   const tabs = [
-    { href: "/",           label: "Collectie", icon: "📚" },
-    { href: "/duplicates", label: "Dubbels",   icon: "🔁" },
-    { href: "/extras",     label: "Extra",     icon: "⭐" },
-    { href: "/upload",     label: "Foto",      icon: "📷" },
+    { href: "/",           label: "Collectie", icon: "📚", count: collectedCount },
+    { href: "/duplicates", label: "Dubbels",   icon: "🔁", count: duplicatesCount },
+    { href: "/extras",     label: "Extra",     icon: "⭐", count: null },
+    { href: "/upload",     label: "Foto",      icon: "📷", count: null },
   ];
 
   return (
@@ -29,6 +43,14 @@ export default function BottomNav() {
           >
             <span className="text-xl leading-none">{tab.icon}</span>
             <span className="text-xs font-semibold">{tab.label}</span>
+            {tab.count !== null && (
+              <span
+                className="text-xs font-bold leading-none"
+                style={{ color: active ? "#e8c84a" : "#64748b" }}
+              >
+                {tab.count ?? "·"}
+              </span>
+            )}
           </Link>
         );
       })}
