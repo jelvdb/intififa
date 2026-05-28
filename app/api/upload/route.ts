@@ -20,9 +20,9 @@ export async function POST(request: NextRequest) {
 
   await writeFile(filePath, buffer);
 
-  const state = readState();
+  const state = await readState();
   state.photos.unshift({ filename: safeName, date, note });
-  writeState(state);
+  await writeState(state);
 
   return NextResponse.json({ ok: true, filename: safeName });
 }

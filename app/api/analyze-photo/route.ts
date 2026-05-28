@@ -62,7 +62,7 @@ Only include codes you can read with confidence.`,
     codes = [];
   }
 
-  const state = readState();
+  const state = await readState();
   const newStickers: string[] = [];
   const duplicateStickers: string[] = [];
   const unknownCodes: string[] = [];

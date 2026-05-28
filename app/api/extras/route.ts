@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   const { action, id, label, delta } = body;
 
-  const state = readState();
+  const state = await readState();
 
   if (action === "add") {
     if (!label?.trim()) return NextResponse.json({ error: "Missing label" }, { status: 400 });
@@ -21,6 +21,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unknown action" }, { status: 400 });
   }
 
-  writeState(state);
+  await writeState(state);
   return NextResponse.json({ ok: true, extras: state.extras });
 }
