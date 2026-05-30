@@ -28,10 +28,10 @@ export default function CountrySection({ section, collected, onStickerClick }: C
       style={{ background: c.surface, border: done ? `1.5px solid ${c.successBright}` : `1.5px solid ${c.border}` }}
     >
       <button
-        className="w-full flex items-center gap-3 px-4 py-3"
+        className="w-full flex items-center gap-3 px-4 py-2.5"
         onClick={() => setOpen((o) => !o)}
       >
-        <span className="leading-none" style={{ fontSize: "3rem" }}>{section.flag}</span>
+        <span className="leading-none" style={{ fontSize: "1.75rem" }}>{section.flag}</span>
         <div className="flex-1 text-left">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-sm" style={{ color: c.text }}>{section.name}</span>

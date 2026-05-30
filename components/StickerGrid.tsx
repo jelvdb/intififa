@@ -16,7 +16,9 @@ const TYPE_EMOJI: Record<string, string> = {
 
 export default function StickerGrid({ stickers, collected, onStickerClick }: StickerGridProps) {
   return (
-    <div className="grid gap-1.5" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
+    // minmax(0, 1fr) keeps every column an equal width and stops long labels
+    // from widening a tile / overflowing the row off-screen.
+    <div className="grid gap-1.5" style={{ gridTemplateColumns: "repeat(5, minmax(0, 1fr))" }}>
       {stickers.map((sticker) => {
         const isCollected = !!collected[sticker.id];
         const emoji = TYPE_EMOJI[sticker.type] ?? "";
@@ -26,9 +28,10 @@ export default function StickerGrid({ stickers, collected, onStickerClick }: Sti
         return (
           <button
             key={sticker.id}
-            className="sticker-btn rounded-lg flex flex-col items-center justify-center gap-0.5 relative"
+            className="sticker-btn rounded-lg flex flex-col items-center justify-center gap-0.5 relative overflow-hidden"
             style={{
-              height: 88,
+              aspectRatio: "1 / 1",
+              minWidth: 0,
               background: bg,
               border: `1.5px solid ${border}`,
             }}
@@ -37,27 +40,27 @@ export default function StickerGrid({ stickers, collected, onStickerClick }: Sti
             {isCollected && (
               <span
                 className="absolute leading-none font-bold"
-                style={{ top: 5, right: 7, fontSize: 10, color: c.greenInk }}
+                style={{ top: 4, right: 5, fontSize: 9, color: c.greenInk }}
               >
                 ✓
               </span>
             )}
             {emoji && !isCollected && (
-              <span className="text-xs leading-none">{emoji}</span>
+              <span className="leading-none" style={{ fontSize: 9 }}>{emoji}</span>
             )}
             <span
-              className="font-bold leading-none"
+              className="font-bold leading-none truncate w-full text-center px-0.5"
               style={{
                 color: isCollected ? c.greenInk : c.text,
-                fontSize: sticker.code.length > 5 ? "15px" : "18px",
+                fontSize: sticker.code.length > 4 ? "13px" : "15px",
               }}
             >
               {sticker.code}
             </span>
             {sticker.type === "player" && sticker.label && (
               <span
-                className="leading-none truncate w-full text-center px-1"
-                style={{ fontSize: "12px", color: isCollected ? c.greenInk : c.textSubtle }}
+                className="leading-none truncate w-full text-center px-0.5"
+                style={{ fontSize: "9px", color: isCollected ? c.greenInk : c.textSubtle }}
               >
                 {sticker.label.split(" ").pop()}
               </span>
