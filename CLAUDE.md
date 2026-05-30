@@ -12,9 +12,9 @@ The owner uploads photos of stickers in a Claude Code session. When that happens
    Fronts show player + club + national flag. Use whichever side is visible.
 2. **Map code → sticker id:** `{PREFIX}{n}` → `{prefix-lowercase}-{n}`
    (e.g. `MEX8` → `mex-8`), except special stickers `FWC{n}` → `sp-{n}`.
-   Verify the prefix against the `countries` list in `data/stickers.ts` — a few
-   printed codes differ from the stored id (e.g. Curaçao prints `CUW` but is
-   stored as `cur`).
+   Verify the prefix against the `countries` list in `data/stickers.ts` — the
+   stored id matches the printed Panini code (e.g. Curaçao prints `CUW` and is
+   stored as `cuw`).
 3. **Compare to the live collection:** `GET https://paninti.jel.be/api/state`.
    `collected` is a map of owned sticker ids; `duplicates` is a map of counts.
 4. **Report** which scanned stickers are ✨ new (not in `collected`) vs
