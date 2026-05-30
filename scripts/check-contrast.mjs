@@ -4,7 +4,7 @@ const C = {
   bg: "#F4F6FB", surface: "#FFFFFF", surfaceMuted: "#EDF0F8", surfaceAccent: "#E6EAF6",
   border: "#D3D9EA", borderStrong: "#AEB6D4",
   text: "#14173A", textMuted: "#474D72", textSubtle: "#5A6087", white: "#FFFFFF",
-  tealInk: "#086D77", purpleInk: "#4F3FC4", redInk: "#C42330", orangeInk: "#B25E00",
+  tealInk: "#086D77", purpleInk: "#4F3FC4", redInk: "#C42330", orangeInk: "#9A5200",
   greenInk: "#0F7A43", goldInk: "#8A6400",
   primary: "#5B4BD6", success: "#0F7A43", danger: "#D12E3C",
 };

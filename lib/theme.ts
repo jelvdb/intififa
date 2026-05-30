@@ -20,7 +20,7 @@ export const c = {
   tealInk: "#086D77",
   purpleInk: "#4F3FC4",
   redInk: "#C42330",
-  orangeInk: "#B25E00",
+  orangeInk: "#9A5200",
   greenInk: "#0F7A43",
   goldInk: "#8A6400",
 
